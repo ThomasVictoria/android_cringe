@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Cringe</string>
+    <string name="facebook_app_id">184413571960258</string>
+
+
+    <string name="title_activity_intro">Login</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">CRINGE IS COMING</string>
+    <string name="slide_1_desc">Votre ami arrive… et il est malaisant</string>
+
+    <string name="slide_2_title">DECLARE IT… NOW!</string>
+    <string name="slide_2_desc">Sortez app_name et appuyez simplement sur le bouton</string>
+
+    <string name="slide_3_title">REVIVEZ VOS MOMENTS</string>
+    <string name="slide_3_desc">Bon on est d\'accord, ou pas. Mais au moins n\'y allez plus</string>
+    
+    <string name="login_title">Welcome to the CringeOMeter</string>
+    <string name="login_desc">On a tous nos moments génants</string>
+    <string name="login_button">Facebook login</string>
+</resources>

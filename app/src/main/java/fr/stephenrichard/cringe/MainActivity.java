@@ -12,13 +12,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        super.onCreate();
-        Firebase.setAndroidContext(this);
-
-        Firebase myFirebaseRef = new Firebase("https://project-5907554604004073121.firebaseio.com/");
-
-        myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
-
     }
 
 

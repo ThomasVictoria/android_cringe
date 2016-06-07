@@ -18,8 +18,8 @@ import fr.stephenrichard.cringe.model.Cringe;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-//    Firebase mDatabase;
+    //FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    Firebase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             System.out.println("NOM : "+user.getDisplayName());
 
-            createCringe(true, "temere", 5, "fils de pute", "qlkihqouy");
+            createCringe(true, "Jean michel", 5, "Ouais la description", "0976875");
 
         } else {
             System.out.println("non");
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createCringe(Boolean isPrivate, String author, Integer level, String desc, String uid){
 
+        /*
         String key = mDatabase.child("cringes").push().getKey();
         Cringe cringe = new Cringe(isPrivate, author, level, desc, uid);
         Map<String, Object> cringeValues = cringe.toMap();
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         childUpdates.put("/cringes/" + key, cringeValues);
 
         mDatabase.updateChildren(childUpdates);
+        */
+
+        Cringe cringe = new Cringe(isPrivate, author, level, desc, uid);
+
+        mDatabase.child("cringes").child(uid).setValue(cringe);
 
     }
 

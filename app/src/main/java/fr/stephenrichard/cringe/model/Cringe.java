@@ -15,17 +15,21 @@ public class Cringe {
     public Integer level;
     public String desc;
     public String uid;
+    public Double longitude;
+    public Double latitude;
 
     public Cringe() {
 
     }
 
-    public Cringe(Boolean isPrivate, String author, Integer level, String desc, String uid) {
+    public Cringe(Boolean isPrivate, String author, Integer level, String desc, String uid, Double longitude, Double latitude) {
         this.isPrivate = isPrivate;
         this.author = author;
         this.level = level;
         this.desc = desc;
         this.uid = uid;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     @Exclude
@@ -36,6 +40,8 @@ public class Cringe {
         result.put("level", level);
         result.put("desc", desc);
         result.put("uid", uid);
+        result.put("latitude", latitude);
+        result.put("longitude", longitude);
 
         return result;
     }

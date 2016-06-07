@@ -20,38 +20,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RadioButton android:id="@+id/choi_51"
+            <Switch
+                android:id="@+id/isPrivate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:onClick="onCheckedChanged"
+                android:text="Mettre son cringe en privée"/>
+
+            <RadioButton android:id="@+id/choice_1"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="1 - c'est génant"
+               android:onClick="onRadioButtonClicked"
                android:background="@color/mainPink"/>
 
-            <RadioButton android:id="@+id/choi_2"
+            <RadioButton android:id="@+id/choice_2"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@color/mainPink"
+                android:onClick="onRadioButtonClicked"
                android:layout_marginTop="20dp"
                android:paddingRight="20dp"
                android:text=" 2 -"/>
 
-            <RadioButton android:id="@+id/choi_3"
+            <RadioButton android:id="@+id/choice_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/mainPink"
+                android:onClick="onRadioButtonClicked"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"
                 android:text="3 -"/>
 
-            <RadioButton android:id="@+id/choi_4"
+            <RadioButton android:id="@+id/choice_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
                 android:background="@color/mainPink"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"
                 android:text="4 - "/>
 
-            <RadioButton android:id="@+id/choi_5"
+            <RadioButton android:id="@+id/choice_5"
                 android:layout_width="match_parent"
+                android:onClick="onRadioButtonClicked"
                 android:layout_height="wrap_content"
                 android:background="@color/mainPink"
                 android:layout_marginTop="20dp"
@@ -59,10 +72,19 @@
                 android:text="5 - c'est con"/>
 
             <EditText
+                android:id="@+id/cringe_desc"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Quel est le sujet du cringe"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Button_create_cringe"
+                android:layout_marginTop="50dp"
+                android:text="Publier Cringe"
+                />
 
         </RadioGroup>
 

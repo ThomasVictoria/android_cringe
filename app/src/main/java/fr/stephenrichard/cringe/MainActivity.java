@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private Boolean isPrivate;
 
+    private double userLat;
+    private double userLng;
+
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
-
-    private TextView mLatitudeTextView;
-    private TextView mLongitudeTextView;
 
     private LocationManager mLocationManager;
     private String provider;
@@ -99,14 +99,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         desc = "";
 
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                    // Calendar c = Calendar.getInstance().getTime();
 
-                    createCringe(isPrivate, cal.getTime().toLocaleString(), user.getDisplayName(), level, desc, user.getUid(), 0.22222222233222, 2.2222222556);
+                    createCringe(isPrivate, cal.getTime().toLocaleString(), user.getDisplayName(), level, desc, user.getUid(), userLat, userLng);
                 }
             });
-
-        mLatitudeTextView = (TextView) findViewById((R.id.user_lat));
-        mLongitudeTextView = (TextView) findViewById((R.id.user_lng));
 
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -132,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 System.out.println("Provider " + provider + " has been selected.");
                 onLocationChanged(location);
             } else {
-                mLatitudeTextView.setText("Location not available");
-                mLongitudeTextView.setText("Location not available");
+
             }
             return;
         }
@@ -208,13 +203,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onPause() {
         super.onPause();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         mLocationManager.removeUpdates(this);
@@ -222,10 +211,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-        float lat = (float) (location.getLatitude());
-        float lng = (float) (location.getLongitude());
-        mLatitudeTextView.setText(String.valueOf(lat));
-        mLongitudeTextView.setText(String.valueOf(lng));
+        userLat = (double) (location.getLatitude());
+        userLng = (double) (location.getLongitude());
     }
 
     @Override
@@ -249,17 +236,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Main Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://fr.stephenrichard.cringe/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
@@ -269,16 +250,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Main Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://fr.stephenrichard.cringe/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);

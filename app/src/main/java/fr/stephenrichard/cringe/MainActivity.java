@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
 
-                    createCringe(isPrivate, cal.getTime().toLocaleString(), user.getDisplayName(), level, desc, user.getUid(), userLat, userLng);
+                    createCringe(isPrivate, cal.getTime().toString(), user.getDisplayName(), level, desc, user.getUid(), userLat, userLng);
                 }
             });
 
@@ -117,10 +118,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Define the criteria how to select the locatioin provider -> use
         // default
         Criteria criteria = new Criteria();
-        provider = mLocationManager.getBestProvider(criteria, false);
+        provider = mLocationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+
             Location location = mLocationManager.getLastKnownLocation(provider);
 
             // Initialize the location fields
@@ -146,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         String key = mDatabase.child("cringes").push().getKey();
+
+        Toast.makeText(this, "Here is lat"+userLat, Toast.LENGTH_SHORT).show();
+
         Cringe cringe = new Cringe(isPrivate, created_at, author, level, desc, uid, longitude, latitude);
         Map<String, Object> cringeValues = cringe.toMap();
 
@@ -153,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         childUpdates.put("/cringes/" + key, cringeValues);
 
         mDatabase.updateChildren(childUpdates);
-
     }
 
 

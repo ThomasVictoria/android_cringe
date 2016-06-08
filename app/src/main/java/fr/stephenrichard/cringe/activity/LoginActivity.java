@@ -33,6 +33,7 @@ import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -83,7 +84,6 @@ public class LoginActivity extends AppCompatActivity  {
                 Log.d(TAG, "facebook:onError" + error);
             }
         });
-
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 

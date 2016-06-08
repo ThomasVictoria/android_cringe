@@ -20,12 +20,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/user_lat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/user_lng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <Switch
                 android:id="@+id/isPrivate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
-                android:onClick="onCheckedChanged"
                 android:text="Mettre son cringe en privée"/>
 
             <RadioButton android:id="@+id/choice_1"

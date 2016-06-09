@@ -71,7 +71,7 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cringe);
 
         Button button_cringe = (Button) findViewById(R.id.Button_create_cringe);
         Switch switchPrivate = (Switch) findViewById(R.id.isPrivate);

@@ -27,7 +27,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,23 +44,25 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.CringeActivity" />
+
+        <!-- CRINGE THEME -->
+        <activity
+            android:name=".activity.CringeActivity"
+            android:theme="@style/CringeTheme" />
+
         <activity android:name=".activity.ListActivity" />
         <activity android:name=".activity.DetailCringeActivity" />
         <activity android:name=".activity.ProfilActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/MainTheme">
+        </activity>
     </application>
 
 </manifest>

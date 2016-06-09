@@ -15,4 +15,6 @@
     <dimen name="slide_desc">15sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="activity_title_font_size">20sp</dimen>
 </resources>

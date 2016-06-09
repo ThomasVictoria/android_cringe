@@ -25,5 +25,6 @@
 
     <string name="yolo">yolo</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_cringe">Ajouter un cringe</string>
 
 </resources>

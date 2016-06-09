@@ -43,8 +43,8 @@ public class Cringe {
         result.put("level", level);
         result.put("desc", desc);
         result.put("uid", uid);
-        result.put("lat", lat);
         result.put("lng", lng);
+        result.put("lat", lat);
 
         return result;
     }

@@ -56,7 +56,7 @@ public class MapActivity extends Fragment {
         // Gets to GoogleMap from the MapView and does initialization stuff
         map = mapView.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(false);
-        if (ActivityCompat.checkSelfPermission(ApplicationContext.getAppContext() , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ApplicationContext.getAppContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ApplicationContext.getAppContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             if(map != null){
                 System.out.println("non");

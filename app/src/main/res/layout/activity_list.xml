@@ -7,6 +7,7 @@
     <TextView android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="List"/>
+        android:text="List"
+        android:layout_marginTop="200dp"/>
 
 </LinearLayout>

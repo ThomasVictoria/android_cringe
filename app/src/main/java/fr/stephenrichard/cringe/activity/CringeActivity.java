@@ -116,7 +116,7 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
 
         // Get the location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
+        // Define the criteria how to select the location provider -> use
         // default
         Criteria criteria = new Criteria();
         provider = mLocationManager.getBestProvider(criteria, true);

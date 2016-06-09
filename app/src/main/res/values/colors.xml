@@ -3,11 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainPink">#FF2E5E</color>
+    <color name="mainPink">#FE56A9</color>
     <color name="pure_white">#FFFFFF</color>
 
-    <color name="dark_grey">#313131</color>
-    <color name="light_grey">#DEDEDE</color>
+    <color name="dark_grey">#414345</color>
+    <color name="light_grey">#6D6D72</color>
+    <color name="lighter_grey">#666666</color>
+
+    <color name="dots_empty">#AAAAAA</color>
 
     <color name="fb_blue">#497cf9</color>
 </resources>

@@ -4,9 +4,14 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">15dp</dimen>
-    <dimen name="img_width">120dp</dimen>
-    <dimen name="img_height">160dp</dimen>
-    <dimen name="slide_title">30dp</dimen>
-    <dimen name="slide_desc">16dp</dimen>
+    <dimen name="margin_left_right">20dp</dimen>
+    <dimen name="margin_top_bottom">10dp</dimen>
+    <dimen name="img_width">155dp</dimen>
+    <dimen name="img_height">204dp</dimen>
+    <dimen name="img_intro_margin">60dp</dimen>
+    <dimen name="font_small">11sp</dimen>
+    <dimen name="slide_title">17sp</dimen>
+    <dimen name="slide_title_margin">10dp</dimen>
+    <dimen name="slide_desc">15sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
 </resources>

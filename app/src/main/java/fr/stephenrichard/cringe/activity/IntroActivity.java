@@ -10,10 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +33,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
-import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.adapter.ViewPagerAdapter;
 import fr.stephenrichard.cringe.manager.PrefManager;
 import fr.stephenrichard.cringe.R;

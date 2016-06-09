@@ -1,4 +1,4 @@
-package fr.stephenrichard.cringe;
+package fr.stephenrichard.cringe.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -37,9 +37,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class CringeActivity extends AppCompatActivity implements LocationListener {
 
     private static final int REQUEST_CHECK_SETTINGS = 0;
     private DatabaseReference mDatabase;

@@ -57,7 +57,11 @@
         <activity android:name=".activity.CringeActivity" />
         <activity android:name=".activity.ListActivity" />
         <activity android:name=".activity.DetailCringeActivity" />
-        <activity android:name=".activity.ProfilActivity"></activity>
+        <activity android:name=".activity.ProfilActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

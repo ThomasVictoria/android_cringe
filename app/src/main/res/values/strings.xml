@@ -24,5 +24,6 @@
     <string name="login_button">Facebook login</string>
 
     <string name="yolo">yolo</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

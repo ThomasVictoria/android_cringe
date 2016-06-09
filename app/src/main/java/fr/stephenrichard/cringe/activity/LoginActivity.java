@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
+import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 
 /**

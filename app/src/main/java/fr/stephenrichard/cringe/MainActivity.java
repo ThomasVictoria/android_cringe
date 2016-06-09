@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,8 +17,17 @@ import android.view.ViewGroup;
 
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.activity.CringeActivity;
+import fr.stephenrichard.cringe.adapter.ActivityAdapter;
 
-public class MainActivity extends FragmentActivity{
+import fr.stephenrichard.cringe.R;
+import fr.stephenrichard.cringe.activity.MapActivity;
+import fr.stephenrichard.cringe.activity.ListActivity;
+
+public class MainActivity extends AppCompatActivity{
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     private FloatingActionButton fabButton;
 
@@ -27,14 +39,34 @@ public class MainActivity extends FragmentActivity{
         fabButton = (FloatingActionButton) findViewById(R.id.fab);
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 launchCringeCreate();
             }
         });
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        if (tabLayout != null)
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     protected void launchCringeCreate() {
         startActivity(new Intent(this, CringeActivity.class));
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ListActivity(), "List");
+        adapter.addFragment(new MapActivity(), "Map");
+        viewPager.setAdapter(adapter);
+    }
 }

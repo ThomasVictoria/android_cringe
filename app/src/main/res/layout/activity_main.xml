@@ -3,13 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_list"
-        android:name="fr.stephenrichard.cringe.activity.ListActivity"
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"/>
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/menu_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            app:tabGravity="fill"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -45,11 +64,5 @@
         android:layout_marginEnd="30dp"
         android:tint="@color/pure_white"
         android:src="@android:drawable/ic_input_add" />
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_map"
-        android:name="fr.stephenrichard.cringe.activity.MapActivity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>

@@ -1,7 +1,11 @@
 package fr.stephenrichard.cringe.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +52,7 @@ public class CringeActivity extends AppCompatActivity {
 
     LocationResult locationResult;
     LocationHelper locationHelper;
+    LocationManager locationManager;
 
     CringeActivity cringeActivity;
 
@@ -94,31 +99,6 @@ public class CringeActivity extends AppCompatActivity {
                     createCringe(isPrivate, cal.getTime().toString(), user.getDisplayName(), level, desc, user.getUid(), userLat, userLng);
                 }
             });
-
-        /*
-        // to get location updates, initialize LocationResult
-        this.locationResult = new LocationResult(){
-            @Override
-            public void gotLocation(Location location){
-
-                //Got the location!
-                if(location!=null){
-
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-
-                    Log.e(TAG, "lat: " + latitude + ", long: " + longitude);
-
-                    // here you can save the latitude and longitude values
-                    // maybe in your text file or database
-
-                }else{
-                    Log.e(TAG, "Location is null.");
-                }
-
-            }
-        };
-        */
 
         // initialize our useful class,
         this.locationHelper = new LocationHelper();

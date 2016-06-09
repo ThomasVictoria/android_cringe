@@ -1,48 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right"
     android:paddingTop="0dp"
-    tools:context=".activity.IntroActivity"
-    tools:showIn="@layout/activity_intro">
+    android:background="@color/pure_white"
+    tools:context=".activity.IntroActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/margin_left_right"
+        android:layout_above="@+id/layout_dots" />
 
     <LinearLayout
         android:id="@+id/layout_dots"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dots_height"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dots_margin_bottom"
         android:gravity="center"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal"
+        android:layout_above="@+id/login_button"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/btn_skip"
+    </LinearLayout>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_button"
+        android:background="@color/fb_blue"
+        android:textColor="@color/pure_white"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginBottom="@dimen/margin_top_bottom"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/facebook_button_under_text" />
+
+    <TextView
+        android:id="@+id/facebook_button_under_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/intro_sub_facebook"
+        android:textSize="@dimen/font_small"
+        android:textAlignment="center"
+        android:textColor="@color/lighter_grey"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:text="@string/skip"
-        android:textColor="@color/dark_grey"/>
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:text="@string/next"
-        android:textColor="@color/dark_grey"/>
+        android:layout_marginBottom="@dimen/margin_top_bottom"/>
 
 
 </RelativeLayout>

@@ -1,32 +1,21 @@
 package fr.stephenrichard.cringe.activity;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Criteria;
+import android.content.DialogInterface;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -38,9 +27,10 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import fr.stephenrichard.cringe.R;
+import fr.stephenrichard.cringe.helper.LocationHelper;
 import fr.stephenrichard.cringe.model.Cringe;
 
-public class CringeActivity extends AppCompatActivity implements LocationListener {
+public class CringeActivity extends AppCompatActivity {
 
     private static final int REQUEST_CHECK_SETTINGS = 0;
     private DatabaseReference mDatabase;
@@ -56,16 +46,13 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLocation;
+    LocationResult locationResult;
+    LocationHelper locationHelper;
 
-    private LocationManager mLocationManager;
-    private String provider;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    CringeActivity cringeActivity;
+
+    final String TAG = "MainActivity.java";
+
 
 
     @Override
@@ -93,6 +80,8 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
                 @Override
                 public void onClick(View v) {
 
+                    cringeActivity.locationHelper.getLocation(cringeActivity, locationHelper.locationResult);
+
                     EditText editDesc = (EditText) findViewById(R.id.cringe_desc);
 
                     if (editDesc != null)
@@ -106,38 +95,50 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
                 }
             });
 
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }
+        /*
+        // to get location updates, initialize LocationResult
+        this.locationResult = new LocationResult(){
+            @Override
+            public void gotLocation(Location location){
 
-        // Get the location manager
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
-        // default
-        Criteria criteria = new Criteria();
-        provider = mLocationManager.getBestProvider(criteria, true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //Got the location!
+                if(location!=null){
 
-            Location location = mLocationManager.getLastKnownLocation(provider);
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
 
-            // Initialize the location fields
-            if (location != null) {
-                System.out.println("Provider " + provider + " has been selected.");
-                onLocationChanged(location);
-            } else {
+                    Log.e(TAG, "lat: " + latitude + ", long: " + longitude);
+
+                    // here you can save the latitude and longitude values
+                    // maybe in your text file or database
+
+                }else{
+                    Log.e(TAG, "Location is null.");
+                }
 
             }
-            return;
-        }
+        };
+        */
 
+        // initialize our useful class,
+        this.locationHelper = new LocationHelper();
+    }
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    // prevent exiting the app using back pressed
+    // so getting user location can run in the background
+    @Override
+    public void onBackPressed() {
+
+        new AlertDialog.Builder(CringeActivity.this)
+                .setTitle("User Location App")
+                .setMessage("This will end the app. Use the home button instead.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                }).show();
+
     }
 
     public void createCringe(Boolean isPrivate, String created_at, String author, Integer level, String desc, String uid, Double longitude, Double latitude) {
@@ -187,79 +188,5 @@ public class CringeActivity extends AppCompatActivity implements LocationListene
         }
     }
 
-    /* Request updates at startup */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
 
-            return;
-        }
-        mLocationManager.requestLocationUpdates(provider, 400, 1, this);
-
-    }
-
-    /* Remove the locationlistener updates when Activity is paused */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-        mLocationManager.removeUpdates(this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        userLat = (double) (location.getLatitude());
-        userLng = (double) (location.getLongitude());
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW,
-                "Main Page",
-                Uri.parse("http://host/path"),
-                Uri.parse("android-app://fr.stephenrichard.cringe/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW,
-                "Main Page",
-                Uri.parse("http://host/path"),
-                Uri.parse("android-app://fr.stephenrichard.cringe/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }

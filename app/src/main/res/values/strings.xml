@@ -21,7 +21,7 @@
 
     <string name="login_title">Welcome to the CringeOMeter</string>
     <string name="login_desc">On a tous nos moments génants</string>
-    <string name="login_button">Facebook login</string>
+    <string name="login_button">Se connecter à Facebook</string>
 
     <string name="yolo">yolo</string>
     <string name="title_activity_main">MainActivity</string>

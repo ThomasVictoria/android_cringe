@@ -24,15 +24,15 @@
         android:layout_height="@dimen/dots_height"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_above="@+id/login_button"
+        android:layout_above="@+id/fb_button"
         android:layout_centerHorizontal="true">
-
     </LinearLayout>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+    <Button
+        android:id="@+id/fb_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="@string/login_button"
         android:background="@color/fb_blue"
         android:textColor="@color/pure_white"

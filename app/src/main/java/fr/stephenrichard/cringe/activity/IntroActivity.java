@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,6 +53,7 @@ public class IntroActivity extends AppCompatActivity {
     private static final String TAG = "";
     private FirebaseAuth.AuthStateListener mAuthListener;
     private LoginButton loginButton;
+    private Button fbButton;
     CallbackManager callbackManager;
 
     private FirebaseAuth mAuth;
@@ -67,29 +71,36 @@ public class IntroActivity extends AppCompatActivity {
             finish();
         }
 
+        callbackManager = CallbackManager.Factory.create();
+
         setContentView(R.layout.activity_intro);
 
         mAuth = FirebaseAuth.getInstance();
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("email", "public_profile", "user_friends"));
+        fbButton = (Button) findViewById(R.id.fb_button);
 
-        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("Success", "Login");
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(IntroActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(IntroActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        fbButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError" + error);
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(IntroActivity.this, Arrays.asList("email","public_profile", "user_friends"));
             }
         });
 
@@ -120,8 +131,6 @@ public class IntroActivity extends AppCompatActivity {
         };
 
         addBottomDots(0);
-
-        changeStatusBarColor();
 
         viewPagerAdapter = new ViewPagerAdapter(this, layouts);
         viewPager.setAdapter(viewPagerAdapter);
@@ -184,15 +193,6 @@ public class IntroActivity extends AppCompatActivity {
         }
     };
 
-
-    // Set notification bar transparent
-    private void changeStatusBarColor() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
         Log.d(TAG, "handleFacebookAccessToken:" + accessToken);

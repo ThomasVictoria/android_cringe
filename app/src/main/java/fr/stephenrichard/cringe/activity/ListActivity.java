@@ -1,5 +1,6 @@
 package fr.stephenrichard.cringe.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,23 +33,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import fr.stephenrichard.cringe.R;
-import fr.stephenrichard.cringe.adapter.CringeListAdapter;
 import fr.stephenrichard.cringe.model.Cringe;
 import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
 
 public class ListActivity extends Fragment {
+
+    private Context mContext;
 
     private Query mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseRecyclerAdapter<Cringe, CringeViewHolder> mAdapter;
     private ListView mCringeListeView;
     private LinearLayoutManager mManager;
-    private CringeListAdapter mCringeListAdapter;
     private RecyclerView mRecycler;
+
+    private ImageView authorPicture;
 
     private Query mQuery;
 
@@ -64,6 +69,8 @@ public class ListActivity extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_list, container, false);
+
+        mContext = getActivity().getApplicationContext();
 
         // Change number to show more post by default
         mDatabase = FirebaseDatabase.getInstance().getReference("cringes").limitToLast(10);
@@ -83,6 +90,8 @@ public class ListActivity extends Fragment {
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
 
+        authorPicture = (ImageView) getActivity().findViewById(R.id.cringe_author_photo);
+
         // Set up FirebaseRecyclerAdapter with the Query
         Query cringesQuery = mDatabase;
         mAdapter = new FirebaseRecyclerAdapter<Cringe, CringeViewHolder>(
@@ -95,7 +104,11 @@ public class ListActivity extends Fragment {
                 viewHolder.setAuthorName(cringe.author);
                 viewHolder.setDateCreationView(cringe.created_at);
                 viewHolder.setBodyView(cringe.desc);
-                // viewHolder.setAuthorPicture(cringe.author_picture);
+
+                Picasso
+                        .with(getContext())
+                        .load(cringe.author_picture)
+                        .into(viewHolder.authorPicture);
 
                 // UNCOMMENT TO ACTIVATE ACCESS TO DETAIL VIEW
                 /*

@@ -25,8 +25,6 @@ public class CringeViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
 
-    private Context context;
-
     public TextView authorView;
     public TextView dateCreationView;
     public TextView bodyView;
@@ -62,7 +60,8 @@ public class CringeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setAuthorPicture(String url) {
-        authorPicture.setImageBitmap(getBitmapFromURL(url));
+
+        // authorPicture.setImageBitmap(getBitmapFromURL(url));
     }
 
     public static Bitmap getBitmapFromURL(String src) {

@@ -4,8 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,7 +21,9 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,28 +36,51 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 import fr.stephenrichard.cringe.R;
+import fr.stephenrichard.cringe.model.Cringe;
 
-public class MapActivity extends Fragment implements OnMapReadyCallback{
+public class MapActivity extends Fragment implements OnMapReadyCallback, LocationListener {
 
     private View rootView;
     GoogleMap googleMap;
     MapView mMapView;
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
+    private DatabaseReference mDatabase;
 
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            googleMap.setMyLocationEnabled(true);
-        } else {
-            System.out.println("non");
-        }
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("cringes");
         
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10))
-                .title("Hello world"));
+        System.out.println(mDatabase);
+
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
+
+            LocationManager locationManager = (LocationManager)
+                    getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+
+            LatLng coordinate = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
+            map.animateCamera(yourLocation);
+
+        } else {
+            Toast.makeText(this.getContext(), "Geolocation Access Denied",
+                    Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -112,4 +141,23 @@ public class MapActivity extends Fragment implements OnMapReadyCallback{
         super.onDestroyView();
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }

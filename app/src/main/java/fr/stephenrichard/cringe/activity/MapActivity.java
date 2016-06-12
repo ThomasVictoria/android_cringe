@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,14 +55,8 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
     GoogleMap googleMap;
     MapView mMapView;
 
-    private DatabaseReference mDatabase;
-
     @Override
     public void onMapReady(final GoogleMap map) {
-
-        mDatabase = FirebaseDatabase.getInstance().getReference("cringes");
-
-        System.out.println(mDatabase);
 
         if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
@@ -82,6 +77,8 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
                     Toast.LENGTH_LONG).show();
         }
 
+
+
     }
 
     @Override
@@ -92,6 +89,9 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Firebase ref = new Firebase("https://project-5907554604004073121.firebaseio.com/cringes");
+
     }
 
     @Override

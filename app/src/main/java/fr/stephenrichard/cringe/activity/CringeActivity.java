@@ -35,7 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -138,8 +140,7 @@ public class CringeActivity extends AppCompatActivity {
                     "Current location \n Longitude: %1$s \n Latitude: %2$s",
                     mLocation.getLongitude(), mLocation.getLatitude()
             );
-            Toast.makeText(CringeActivity.this, message,
-                    Toast.LENGTH_LONG).show();
+            // Toast.makeText(CringeActivity.this, message, Toast.LENGTH_LONG).show();
 
             return new Double[]{mLocation.getLatitude(), mLocation.getLongitude()};
 
@@ -181,20 +182,18 @@ public class CringeActivity extends AppCompatActivity {
 
     public void submitCringe() throws IOException {
 
-        //Firebase.setAndroidContext(this);
-
         Double[] userLocation = showCurrentLocation();
 
         final String desc = mBodyTextField.getText().toString();
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final String userId = user.getUid();
         final String userName = user.getDisplayName();
-        final Bitmap userPicture = BitmapFactory.decodeFile(String.valueOf(user.getPhotoUrl()));
+        final String userPicture = user.getPhotoUrl().toString();
 
         writeNewCringe(isPrivate, cal.getTime().toString(), userName, userPicture, level, desc, userId, userLocation[0], userLocation[1]);
     }
 
-    private void writeNewCringe(Boolean isPrivate, String created_at, String author, Bitmap authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
+    private void writeNewCringe(Boolean isPrivate, String created_at, String author, String authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
 
         String key = mDatabase.child("cringes").push().getKey();
 
@@ -238,6 +237,24 @@ public class CringeActivity extends AppCompatActivity {
                 if (checked)
                     level = 5;
                 break;
+        }
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            Log.e("src",src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            Log.e("Bitmap","returned");
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception",e.getMessage());
+            return null;
         }
     }
 

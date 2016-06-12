@@ -1,10 +1,19 @@
 package fr.stephenrichard.cringe.viewholder;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
@@ -15,6 +24,8 @@ import fr.stephenrichard.cringe.model.Cringe;
 public class CringeViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
+
+    private Context context;
 
     public TextView authorView;
     public TextView dateCreationView;
@@ -50,8 +61,23 @@ public class CringeViewHolder extends RecyclerView.ViewHolder {
         bodyView.setText(text);
     }
 
-    public void setAuthorPicture(Bitmap url) {
-        authorPicture.setImageBitmap(url);
+    public void setAuthorPicture(String url) {
+        authorPicture.setImageBitmap(getBitmapFromURL(url));
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

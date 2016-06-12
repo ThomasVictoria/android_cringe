@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/cringes_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="5dp"
-        android:layout_marginTop="@dimen/margin_top_bottom"
+        android:layout_marginTop="110dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/item_cringe"/>
+        tools:listitem="@layout/item_cringe" />
 
 </FrameLayout>

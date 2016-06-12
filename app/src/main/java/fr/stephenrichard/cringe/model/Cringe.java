@@ -20,13 +20,13 @@ public class Cringe {
     public String uid;
     public Double lng;
     public Double lat;
-    public Bitmap author_picture;
+    public String author_picture;
 
     public Cringe() {
 
     }
 
-    public Cringe(Boolean isPrivate, String created_at, String author, Bitmap author_picture, Integer level, String desc, String uid, Double lng, Double lat) {
+    public Cringe(Boolean isPrivate, String created_at, String author, String author_picture, Integer level, String desc, String uid, Double lng, Double lat) {
         this.isPrivate = isPrivate;
         this.created_at = created_at;
         this.author = author;
@@ -58,6 +58,6 @@ public class Cringe {
     public Integer getLevel() { return level; }
     public String getDateCreation() { return created_at; }
     public String getDesc() { return desc; }
-    public Bitmap getAuthor_picture() { return author_picture; }
+    public String getAuthor_picture() { return author_picture; }
 
 }

@@ -60,7 +60,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
     public void onMapReady(final GoogleMap map) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("cringes");
-        
+
         System.out.println(mDatabase);
 
         if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {

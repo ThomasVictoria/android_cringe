@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,13 +41,13 @@ import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
 
 public class ListActivity extends Fragment {
 
-    private FirebaseDatabase mDatabase;
+    private Query mDatabase;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter<Cringe, CringeViewHolder> mAdapter;
     private ListView mCringeListeView;
     private LinearLayoutManager mManager;
     private CringeListAdapter mCringeListAdapter;
+    private RecyclerView mRecycler;
 
     private Query mQuery;
 
@@ -64,80 +65,37 @@ public class ListActivity extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.activity_list, container, false);
 
-        mCringeListAdapter = new CringeListAdapter(getActivity(),
-                R.layout.activity_list, new ArrayList<Cringe>());
-        mCringeListeView = (ListView) rootView.findViewById(R.id.cringes_list);
-        mCringeListeView.setAdapter(mCringeListAdapter);
+        // Change number to show more post by default
+        mDatabase = FirebaseDatabase.getInstance().getReference("cringes").limitToLast(10);
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference("cringes");
-
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Cringe cringe = dataSnapshot.getValue(Cringe.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("List activity: ", "loadPost:onCancelled", databaseError.toException());
-            }
-        });
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.cringes_list);
+        mRecycler.setHasFixedSize(true);
 
         return rootView;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        // attachRecyclerViewAdapter();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(mAdapter != null) {
-            mAdapter.cleanup();
-        }
-    }
-
-    /*
-    private void attachRecyclerViewAdapter() {
-        mAdapter = new FirebaseRecyclerAdapter<Cringe, CringeViewHolder>(
-                Cringe.class, R.layout.item_cringe, CringeViewHolder.class, mQuery) {
-            @Override
-            protected void populateViewHolder(CringeViewHolder viewHolder, Cringe cringe, int position) {
-
-                viewHolder.setAuthorName(cringe.author);
-                viewHolder.setDateCreationView(cringe.created_at);
-                viewHolder.setBodyView(cringe.desc);
-                viewHolder.setAuthorPicture(cringe.author_picture);
-
-            }
-        };
-
-        mRecycler.setAdapter(mAdapter);
-    }
-    */
-
-    /*
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Set up FirebaseRecyclerAdapter with the Query
+        mManager = new LinearLayoutManager(getActivity());
+        mManager.setReverseLayout(true);
+        mManager.setStackFromEnd(true);
+        mRecycler.setLayoutManager(mManager);
 
+        // Set up FirebaseRecyclerAdapter with the Query
+        Query cringesQuery = mDatabase;
         mAdapter = new FirebaseRecyclerAdapter<Cringe, CringeViewHolder>(
-                Cringe.class, R.layout.item_cringe, CringeViewHolder.class, mQuery) {
+                Cringe.class, R.layout.item_cringe, CringeViewHolder.class, mDatabase) {
 
             @Override
-            protected void populateViewHolder(CringeViewHolder viewHolder, Cringe cringe, int position) {
+            protected void populateViewHolder(final CringeViewHolder viewHolder, final Cringe cringe, final int position) {
                 final DatabaseReference cringeRef = getRef(position);
 
                 viewHolder.setAuthorName(cringe.author);
                 viewHolder.setDateCreationView(cringe.created_at);
                 viewHolder.setBodyView(cringe.desc);
+                // viewHolder.setAuthorPicture(cringe.author_picture);
 
                 // UNCOMMENT TO ACTIVATE ACCESS TO DETAIL VIEW
                 /*
@@ -151,13 +109,11 @@ public class ListActivity extends Fragment {
                         startActivity(intent);
                     }
                 });
-
-
+                */
             }
         };
         mRecycler.setAdapter(mAdapter);
     }
-    */
 
 
 

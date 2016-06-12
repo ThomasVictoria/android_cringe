@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "813338398399-rllj0siq2mok9frtkbig0u3fudaqm032.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.stephenrichard.cringe",
+            "certificate_hash": "0E2CD1E67CECB43512C0DECFA113B95AF33A22AE"
+          }
+        },
+        {
           "client_id": "813338398399-lssspsjosfeqecd9l094278o0gqeegb1.apps.googleusercontent.com",
           "client_type": 3
         }

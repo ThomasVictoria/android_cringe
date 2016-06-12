@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.activity.CringeActivity;
 import fr.stephenrichard.cringe.adapter.ActivityAdapter;
@@ -23,7 +25,7 @@ import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.activity.MapActivity;
 import fr.stephenrichard.cringe.activity.ListActivity;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -31,10 +33,14 @@ public class MainActivity extends AppCompatActivity{
 
     private FloatingActionButton fabButton;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         fabButton = (FloatingActionButton) findViewById(R.id.fab);
         fabButton.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);

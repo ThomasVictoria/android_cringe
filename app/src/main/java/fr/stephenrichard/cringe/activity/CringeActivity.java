@@ -3,7 +3,10 @@ package fr.stephenrichard.cringe.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,15 +28,22 @@ import com.firebase.client.Firebase;
 import com.google.android.gms.location.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
@@ -45,12 +55,7 @@ public class CringeActivity extends AppCompatActivity {
 
     private Integer level;
 
-    private String desc;
-
     private Boolean isPrivate = false;
-
-    private double userLat;
-    private double userLng;
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -59,13 +64,24 @@ public class CringeActivity extends AppCompatActivity {
     protected LocationManager locationManager;
     protected Location mLocation;
 
+    private static final String TAG = "NewPostActivity";
+
+    private Switch mSwitchPrivate;
+    private Button mButton_cringe;
+    private EditText mBodyTextField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cringe);
 
-        Button button_cringe = (Button) findViewById(R.id.Button_create_cringe);
-        Switch switchPrivate = (Switch) findViewById(R.id.isPrivate);
+        // Initialise Database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //
+
+        mButton_cringe = (Button) findViewById(R.id.Button_create_cringe);
+        mSwitchPrivate = (Switch) findViewById(R.id.isPrivate);
+        mBodyTextField = (EditText) findViewById(R.id.cringe_desc);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -79,8 +95,8 @@ public class CringeActivity extends AppCompatActivity {
             return;
         }
 
-        if (switchPrivate != null)
-            switchPrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if (mSwitchPrivate != null)
+            mSwitchPrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
@@ -91,22 +107,15 @@ public class CringeActivity extends AppCompatActivity {
                 }
             });
 
-        if (button_cringe != null)
-            button_cringe.setOnClickListener(new View.OnClickListener() {
+        if (mButton_cringe != null)
+            mButton_cringe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Double[] userLocation = showCurrentLocation();
-
-                    EditText editDesc = (EditText) findViewById(R.id.cringe_desc);
-
-                    if (editDesc != null)
-                        desc = editDesc.getText().toString();
-                    else
-                        desc = "";
-
-                    Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-
-                    createCringe(isPrivate, cal.getTime().toString(), user.getDisplayName(), level, desc, user.getUid(), userLocation[0], userLocation[1]);
+                    try {
+                        submitCringe();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
     }
@@ -138,7 +147,7 @@ public class CringeActivity extends AppCompatActivity {
                     "New Location \n Longitude: %1$s \n Latitude: %2$s",
                     location.getLongitude(), location.getLatitude()
             );
-            Toast.makeText(CringeActivity.this, message, Toast.LENGTH_LONG).show();
+            // Toast.makeText(CringeActivity.this, message, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -162,25 +171,38 @@ public class CringeActivity extends AppCompatActivity {
         }
     }
 
-    public void createCringe(Boolean isPrivate, String created_at, String author, Integer level, String desc, String uid, Double longitude, Double latitude) {
+    public void submitCringe() throws IOException {
 
-        Firebase.setAndroidContext(this);
+        //Firebase.setAndroidContext(this);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        Double[] userLocation = showCurrentLocation();
+
+        final String desc = mBodyTextField.getText().toString();
+        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        final String userId = user.getUid();
+        final String userName = user.getDisplayName();
+        final Bitmap userPicture = BitmapFactory.decodeFile(String.valueOf(user.getPhotoUrl()));
+
+        writeNewCringe(isPrivate, cal.getTime().toString(), userName, userPicture, level, desc, userId, userLocation[0], userLocation[1]);
+    }
+
+    private void writeNewCringe(Boolean isPrivate, String created_at, String author, Bitmap authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
 
         String key = mDatabase.child("cringes").push().getKey();
 
-        Cringe cringe = new Cringe(isPrivate, created_at, author, level, desc, uid, longitude, latitude);
+        Cringe cringe = new Cringe(isPrivate, created_at, author, authorPicture, level, desc, uid, longitude, latitude);
         Map<String, Object> cringeValues = cringe.toMap();
-
-        Toast.makeText(CringeActivity.this, cringeValues.toString(),
-                Toast.LENGTH_LONG).show();
-        System.out.println(cringeValues.toString());
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/cringes/" + key, cringeValues);
 
         mDatabase.updateChildren(childUpdates);
+
+        Toast.makeText(CringeActivity.this,
+                "Votre cringe a bien été publié",
+                Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(this, MainActivity.class));
     }
 
 

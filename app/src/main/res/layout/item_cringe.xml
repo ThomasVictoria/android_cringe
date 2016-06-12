@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/item_cringe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/cringe_padding">
+
+        <include
+            android:id="@+id/cringe_author_layout"
+            layout="@layout/include_post_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/cringe_padding"/>
+
+        <TextView
+            android:id="@+id/cringe_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cringe_author_layout"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae est nibh. Morbi felis mi, ultricies at risus eu, tincidunt sollicitudin sapien."/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

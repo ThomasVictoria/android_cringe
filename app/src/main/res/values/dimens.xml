@@ -17,4 +17,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="activity_title_font_size">20sp</dimen>
+
+    <dimen name="font_base_15">15sp</dimen>
+    <dimen name="cringe_padding">15dp</dimen>
+    <dimen name="author_profile_picture_small">34dp</dimen>
 </resources>

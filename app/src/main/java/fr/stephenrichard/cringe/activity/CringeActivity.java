@@ -89,9 +89,9 @@ public class CringeActivity extends android.support.v4.app.Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //
 
-        mButton_cringe = (Button) getView().findViewById(R.id.Button_create_cringe);
-        mSwitchPrivate = (Switch) getView().findViewById(R.id.isPrivate);
-        mBodyTextField = (EditText) getView().findViewById(R.id.cringe_desc);
+        mButton_cringe = (Button) rootView.findViewById(R.id.Button_create_cringe);
+        mSwitchPrivate = (Switch) rootView.findViewById(R.id.isPrivate);
+        mBodyTextField = (EditText) rootView.findViewById(R.id.cringe_desc);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 

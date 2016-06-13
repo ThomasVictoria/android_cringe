@@ -11,12 +11,16 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -186,6 +190,7 @@ public class CringeActivity extends AppCompatActivity {
 
         final String desc = mBodyTextField.getText().toString();
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+
         final String userId = user.getUid();
         final String userName = user.getDisplayName();
         final String userPicture = user.getPhotoUrl().toString();

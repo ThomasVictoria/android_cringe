@@ -9,6 +9,8 @@
         android:id="@+id/cringe_author_photo"
         android:layout_width="@dimen/author_profile_picture_small"
         android:layout_height="@dimen/author_profile_picture_small"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
         android:src="@drawable/ic_action_account_circle_40"/>
 
     <RelativeLayout

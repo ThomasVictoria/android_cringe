@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
         adapter.addFragment(new ListActivity(), "List");
         adapter.addFragment(new MapActivity(), "Map");
+        adapter.addFragment(new CringeActivity(), "Cringe");
         viewPager.setAdapter(adapter);
     }
 }

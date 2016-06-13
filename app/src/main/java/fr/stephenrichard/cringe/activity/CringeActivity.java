@@ -1,6 +1,7 @@
 package fr.stephenrichard.cringe.activity;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +19,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -53,7 +56,7 @@ import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
-public class CringeActivity extends AppCompatActivity {
+public class CringeActivity extends android.support.v4.app.Fragment {
 
     private static final int REQUEST_CHECK_SETTINGS = 0;
 
@@ -77,28 +80,29 @@ public class CringeActivity extends AppCompatActivity {
     private EditText mBodyTextField;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cringe);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.activity_cringe, container, false);
 
         // Initialise Database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //
 
-        mButton_cringe = (Button) findViewById(R.id.Button_create_cringe);
-        mSwitchPrivate = (Switch) findViewById(R.id.isPrivate);
-        mBodyTextField = (EditText) findViewById(R.id.cringe_desc);
+        mButton_cringe = (Button) getView().findViewById(R.id.Button_create_cringe);
+        mSwitchPrivate = (Switch) getView().findViewById(R.id.isPrivate);
+        mBodyTextField = (EditText) getView().findViewById(R.id.cringe_desc);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MINIMUM_TIME_BETWEEN_UPDATES,
                     MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
                     new MyLocationListener()
             );
-            return;
+
         }
 
         if (mSwitchPrivate != null)
@@ -124,11 +128,13 @@ public class CringeActivity extends AppCompatActivity {
                     }
                 }
             });
+
+        return rootView;
     }
 
     private Double[] showCurrentLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MINIMUM_TIME_BETWEEN_UPDATES,
@@ -165,22 +171,22 @@ public class CringeActivity extends AppCompatActivity {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Toast.makeText(CringeActivity.this, "Provider status changed",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Provider status changed",
+//                    Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            Toast.makeText(CringeActivity.this,
-                    "Provider disabled by the user. GPS turned off",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,
+//                    "Provider disabled by the user. GPS turned off",
+//                    Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            Toast.makeText(CringeActivity.this,
-                    "Provider enabled by the user. GPS turned on",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,
+//                    "Provider enabled by the user. GPS turned on",
+//                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -210,11 +216,10 @@ public class CringeActivity extends AppCompatActivity {
 
         mDatabase.updateChildren(childUpdates);
 
-        Toast.makeText(CringeActivity.this,
-                "Votre cringe a bien été publié",
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,
+//                "Votre cringe a bien été publié",
+//                Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(this, MainActivity.class));
     }
 
 
@@ -242,24 +247,6 @@ public class CringeActivity extends AppCompatActivity {
                 if (checked)
                     level = 5;
                 break;
-        }
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
         }
     }
 

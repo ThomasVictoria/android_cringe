@@ -32,8 +32,14 @@
     <style name="CringeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:colorAccent">@color/turquoise</item>
+        <item name="colorAccent">@color/turquoise</item>
         <item name="android:colorPrimaryDark">@color/blue_fab_button</item>
+    </style>
+
+    <style name="ProfilTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorAccent">@color/turquoise</item>
     </style>
 
     <!--

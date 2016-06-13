@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         if (tabLayout != null)
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     protected void launchCringeCreate() {

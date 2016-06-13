@@ -68,9 +68,9 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
 
             Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 
-            LatLng coordinate = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
-            map.animateCamera(yourLocation);
+//            LatLng coordinate = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+//            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
+//            map.animateCamera(yourLocation);
 
         } else {
             Toast.makeText(this.getContext(), "Geolocation Access Denied",

@@ -74,7 +74,7 @@ public class ListActivity extends Fragment {
         mContext = getActivity().getApplicationContext();
 
         // Change number to show more post by default
-        mDatabase = FirebaseDatabase.getInstance().getReference("cringes").limitToLast(10);
+        mDatabase = FirebaseDatabase.getInstance().getReference("cringes").limitToLast(10).orderByChild("isPrivate").equalTo(false);
 
         mRecycler = (RecyclerView) rootView.findViewById(R.id.cringes_list);
         mRecycler.setHasFixedSize(true);

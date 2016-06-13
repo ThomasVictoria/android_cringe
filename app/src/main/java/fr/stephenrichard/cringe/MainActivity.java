@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import fr.stephenrichard.cringe.activity.CringeActivity;
+
+import fr.stephenrichard.cringe.activity.ListActivity;
+import fr.stephenrichard.cringe.activity.MapActivity;
 import fr.stephenrichard.cringe.activity.ProfileActivity;
 import fr.stephenrichard.cringe.adapter.ActivityAdapter;
-
-import fr.stephenrichard.cringe.activity.MapActivity;
-import fr.stephenrichard.cringe.activity.ListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         fabButton = (FloatingActionButton) findViewById(R.id.fab);
         fabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
 
+            @Override
             public void onClick(View view) {
                 launchCringeCreate();
             }
+
         });
 
         profileIcon = (ImageView) findViewById(R.id.acces_profile);
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
         adapter.addFragment(new ListActivity(), "List");
         adapter.addFragment(new MapActivity(), "Map");
+        adapter.addFragment(new CringeActivity(), "Cringe");
         viewPager.setAdapter(adapter);
     }
 }

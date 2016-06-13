@@ -205,8 +205,10 @@ public class IntroActivity extends AppCompatActivity {
                             Toast.makeText(IntroActivity.this, "Authentication failed",
                                     Toast.LENGTH_SHORT).show();
                         }
+                        else{
+                            launchMainScreen();
+                        }
 
-                        launchMainScreen();
                     }
                 });
     }

@@ -37,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
@@ -108,6 +109,7 @@ public class ListActivity extends Fragment {
                 Picasso
                         .with(getContext())
                         .load(cringe.author_picture)
+                        .transform(new CircleTransform())
                         .into(viewHolder.authorPicture);
 
                 // UNCOMMENT TO ACTIVATE ACCESS TO DETAIL VIEW

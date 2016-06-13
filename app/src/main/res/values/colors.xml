@@ -14,5 +14,9 @@
 
     <color name="fb_blue">#497cf9</color>
     
-    <color name="turquoise">#15CEC0</color>
+    <color name="turquoise">#05EEDD</color>
+    <color name="blue_fab_button">#5579C1</color>
+
+    <color name="gradient_start">#5783CA</color>
+    <color name="gradient_end">#432572</color>
 </resources>

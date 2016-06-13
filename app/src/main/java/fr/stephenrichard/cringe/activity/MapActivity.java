@@ -77,8 +77,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
                     Toast.LENGTH_LONG).show();
         }
 
-
-
     }
 
     @Override
@@ -89,8 +87,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Firebase ref = new Firebase("https://project-5907554604004073121.firebaseio.com/cringes");
 
     }
 

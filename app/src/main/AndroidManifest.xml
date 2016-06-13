@@ -59,7 +59,7 @@
 
         <activity android:name=".activity.ListActivity" />
         <activity android:name=".activity.DetailCringeActivity" />
-        <activity android:name=".activity.ProfilActivity" />
+        <activity android:name=".activity.ProfileActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/MainTheme">

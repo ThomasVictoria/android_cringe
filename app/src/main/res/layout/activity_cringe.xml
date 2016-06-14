@@ -7,7 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="fr.stephenrichard.cringe.activity.CringeActivity">
+    tools:context=".fragment.CringeFragment">
 
     <include
         android:id="@+id/top_bar_layout"
@@ -28,8 +28,10 @@
         android:id="@+id/linearLayout"
         android:layout_below="@+id/top_bar_layout">
 
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        <RadioGroup
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
+            android:id="@+id/radio_group"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="top">
@@ -45,13 +47,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1 - c'est génant"
-                android:buttonTint="@color/turquoise"
-                android:onClick="onRadioButtonClicked" />
+                android:buttonTint="@color/turquoise" />
 
             <RadioButton android:id="@+id/choice_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"
                 android:buttonTint="@color/turquoise"
@@ -60,7 +60,6 @@
             <RadioButton android:id="@+id/choice_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"
                 android:buttonTint="@color/turquoise"
@@ -69,7 +68,6 @@
             <RadioButton android:id="@+id/choice_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"
                 android:buttonTint="@color/turquoise"
@@ -77,7 +75,6 @@
 
             <RadioButton android:id="@+id/choice_5"
                 android:layout_width="match_parent"
-                android:onClick="onRadioButtonClicked"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingRight="20dp"

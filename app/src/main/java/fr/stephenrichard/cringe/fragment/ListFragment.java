@@ -1,48 +1,33 @@
-package fr.stephenrichard.cringe.activity;
+package fr.stephenrichard.cringe.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
 
-public class ListActivity extends Fragment {
+public class ListFragment extends Fragment {
 
     private Context mContext;
 
@@ -54,14 +39,10 @@ public class ListActivity extends Fragment {
     private RecyclerView mRecycler;
 
     private ImageView authorPicture;
-
     private Query mQuery;
-
     private FirebaseUser mUser;
 
-    public static final String TAG = "List activity";
-
-    public ListActivity() {
+    public ListFragment() {
         // Required empty public constructor
     }
 
@@ -94,16 +75,15 @@ public class ListActivity extends Fragment {
         authorPicture = (ImageView) getActivity().findViewById(R.id.cringe_author_photo);
 
         // Set up FirebaseRecyclerAdapter with the Query
-        Query cringesQuery = mDatabase;
         mAdapter = new FirebaseRecyclerAdapter<Cringe, CringeViewHolder>(
                 Cringe.class, R.layout.item_cringe, CringeViewHolder.class, mDatabase) {
 
             @Override
             protected void populateViewHolder(final CringeViewHolder viewHolder, final Cringe cringe, final int position) {
-                final DatabaseReference cringeRef = getRef(position);
 
                 viewHolder.setAuthorName(cringe.author);
-                viewHolder.setDateCreationView(cringe.created_at);
+                String timeAgo = getTimeAgo(cringe.created_at);
+                viewHolder.setDateCreationView(timeAgo);
                 viewHolder.setBodyView(cringe.desc);
 
                 Picasso
@@ -131,7 +111,6 @@ public class ListActivity extends Fragment {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -140,8 +119,44 @@ public class ListActivity extends Fragment {
         }
     }
 
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        return date;
+    }
 
-    public Query getQuery(DatabaseReference databaseReference) {
-        return null;
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+
+    public static String getTimeAgo(long time) {
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+
+        long now = System.currentTimeMillis();
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        final long diff = now - time;
+        if (diff < MINUTE_MILLIS) {
+            return "à l'instant";
+        } else if (diff < 2 * MINUTE_MILLIS) {
+            return "il y a une minute";
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return "Il y a " + diff / MINUTE_MILLIS + " minutes";
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return "il y a une heure";
+        } else if (diff < 24 * HOUR_MILLIS) {
+            return "Il y a " + diff / HOUR_MILLIS + " heures";
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return "hier";
+        } else {
+            return "Il y a " + diff / DAY_MILLIS + " jours";
+        }
     }
 }

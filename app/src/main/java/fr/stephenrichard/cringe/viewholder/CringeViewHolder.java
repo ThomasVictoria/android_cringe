@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
+import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
@@ -41,12 +44,6 @@ public class CringeViewHolder extends RecyclerView.ViewHolder {
         authorPicture = (ImageView) mView.findViewById(R.id.cringe_author_photo);
     }
 
-    public void bindToCringe(Cringe cringe) {
-        authorView.setText(cringe.author);
-        dateCreationView.setText(cringe.created_at);
-        bodyView.setText(cringe.desc);
-    }
-
     public void setAuthorName(String name) {
         authorView.setText(name);
     }
@@ -62,21 +59,6 @@ public class CringeViewHolder extends RecyclerView.ViewHolder {
     public void setAuthorPicture(String url) {
 
         // authorPicture.setImageBitmap(getBitmapFromURL(url));
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

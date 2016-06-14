@@ -1,4 +1,4 @@
-package fr.stephenrichard.cringe.activity;
+package fr.stephenrichard.cringe.fragment;
 
 import android.Manifest;
 import android.app.Fragment;
@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
-public class CringeActivity extends android.support.v4.app.Fragment {
+public class CringeFragment extends android.support.v4.app.Fragment {
 
     private static final int REQUEST_CHECK_SETTINGS = 0;
 
@@ -78,6 +79,7 @@ public class CringeActivity extends android.support.v4.app.Fragment {
     private Switch mSwitchPrivate;
     private Button mButton_cringe;
     private EditText mBodyTextField;
+    private RadioGroup mRadioGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,6 +95,12 @@ public class CringeActivity extends android.support.v4.app.Fragment {
         mSwitchPrivate = (Switch) rootView.findViewById(R.id.isPrivate);
         mBodyTextField = (EditText) rootView.findViewById(R.id.cringe_desc);
 
+        mRadioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
+
+        EditText mEditText = (EditText) rootView.findViewById(R.id.cringe_desc);
+        mEditText.clearFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -102,7 +110,6 @@ public class CringeActivity extends android.support.v4.app.Fragment {
                     MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
                     new MyLocationListener()
             );
-
         }
 
         if (mSwitchPrivate != null)
@@ -116,6 +123,33 @@ public class CringeActivity extends android.support.v4.app.Fragment {
                     }
                 }
             });
+
+        if(mRadioGroup != null) {
+            mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    // boolean checked = ((RadioButton) view).isChecked();
+
+                    switch (checkedId) {
+                        case R.id.choice_1:
+                                level = 1;
+                            break;
+                        case R.id.choice_2:
+                                level = 2;
+                            break;
+                        case R.id.choice_3:
+                                level = 3;
+                            break;
+                        case R.id.choice_4:
+                                level = 4;
+                            break;
+                        case R.id.choice_5:
+                                level = 5;
+                            break;
+                    }
+                }
+            });
+        }
 
         if (mButton_cringe != null)
             mButton_cringe.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +184,7 @@ public class CringeActivity extends android.support.v4.app.Fragment {
                     "Current location \n Longitude: %1$s \n Latitude: %2$s",
                     mLocation.getLongitude(), mLocation.getLatitude()
             );
-            // Toast.makeText(CringeActivity.this, message, Toast.LENGTH_LONG).show();
+            // Toast.makeText(CringeFragment.this, message, Toast.LENGTH_LONG).show();
 
             return new Double[]{mLocation.getLatitude(), mLocation.getLongitude()};
 
@@ -166,7 +200,7 @@ public class CringeActivity extends android.support.v4.app.Fragment {
                     "New Location \n Longitude: %1$s \n Latitude: %2$s",
                     location.getLongitude(), location.getLatitude()
             );
-            // Toast.makeText(CringeActivity.this, message, Toast.LENGTH_LONG).show();
+            // Toast.makeText(CringeFragment.this, message, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -195,16 +229,16 @@ public class CringeActivity extends android.support.v4.app.Fragment {
         Double[] userLocation = showCurrentLocation();
 
         final String desc = mBodyTextField.getText().toString();
-        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        final Long timestamp = System.currentTimeMillis();
 
         final String userId = user.getUid();
         final String userName = user.getDisplayName();
         final String userPicture = user.getPhotoUrl().toString();
 
-        writeNewCringe(isPrivate, cal.getTime().toString(), userName, userPicture, level, desc, userId, userLocation[0], userLocation[1]);
+        writeNewCringe(isPrivate, timestamp, userName, userPicture, level, desc, userId, userLocation[0], userLocation[1]);
     }
 
-    private void writeNewCringe(Boolean isPrivate, String created_at, String author, String authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
+    private void writeNewCringe(Boolean isPrivate, Long created_at, String author, String authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
 
         String key = mDatabase.child("cringes").push().getKey();
 
@@ -216,38 +250,12 @@ public class CringeActivity extends android.support.v4.app.Fragment {
 
         mDatabase.updateChildren(childUpdates);
 
-//        Toast.makeText(this,
-//                "Votre cringe a bien été publié",
-//                Toast.LENGTH_SHORT).show();
+        getFragmentManager().popBackStack();
 
-    }
+        Toast.makeText(getActivity(),
+                "Votre cringe a bien été publié",
+                Toast.LENGTH_SHORT).show();
 
-
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.choice_1:
-                if (checked)
-                    level = 1;
-                break;
-            case R.id.choice_2:
-                if (checked)
-                    level = 2;
-                break;
-            case R.id.choice_3:
-                if (checked)
-                    level = 3;
-                break;
-            case R.id.choice_4:
-                if (checked)
-                    level = 4;
-                break;
-            case R.id.choice_5:
-                if (checked)
-                    level = 5;
-                break;
-        }
     }
 
 }

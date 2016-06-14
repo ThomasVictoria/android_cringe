@@ -1,21 +1,14 @@
-package fr.stephenrichard.cringe.activity;
+package fr.stephenrichard.cringe.fragment;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.provider.SyncStateContract;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -23,33 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Map;
 
 import fr.stephenrichard.cringe.R;
-import fr.stephenrichard.cringe.model.Cringe;
 
-public class MapActivity extends Fragment implements OnMapReadyCallback, LocationListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
     private View rootView;
     GoogleMap googleMap;
@@ -68,9 +42,11 @@ public class MapActivity extends Fragment implements OnMapReadyCallback, Locatio
 
             Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 
+            /*
             LatLng coordinate = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 13);
             map.animateCamera(yourLocation);
+            */
 
         } else {
             Toast.makeText(this.getContext(), "Geolocation Access Denied",

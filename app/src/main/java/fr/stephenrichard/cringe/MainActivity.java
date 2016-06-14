@@ -12,10 +12,10 @@ import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import fr.stephenrichard.cringe.activity.CringeActivity;
+import fr.stephenrichard.cringe.fragment.CringeFragment;
 
-import fr.stephenrichard.cringe.activity.ListActivity;
-import fr.stephenrichard.cringe.activity.MapActivity;
+import fr.stephenrichard.cringe.fragment.ListFragment;
+import fr.stephenrichard.cringe.fragment.MapFragment;
 import fr.stephenrichard.cringe.activity.ProfileActivity;
 import fr.stephenrichard.cringe.adapter.ActivityAdapter;
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void launchCringeCreate() {
-        startActivity(new Intent(this, CringeActivity.class));
+        startActivity(new Intent(this, CringeFragment.class));
     }
 
     protected void launchProfile() {
@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CringeActivity(), "Cringe");
-        adapter.addFragment(new ListActivity(), "List");
-        adapter.addFragment(new MapActivity(), "Map");
+        adapter.addFragment(new CringeFragment(), "Cringe");
+        adapter.addFragment(new ListFragment(), "List");
+        adapter.addFragment(new MapFragment(), "Map");
         viewPager.setAdapter(adapter);
     }
 }

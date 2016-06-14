@@ -14,7 +14,7 @@ import java.util.Map;
 public class Cringe {
     public Boolean isPrivate;
     public String author;
-    public String created_at;
+    public Long created_at;
     public Integer level;
     public String desc;
     public String uid;
@@ -26,7 +26,7 @@ public class Cringe {
 
     }
 
-    public Cringe(Boolean isPrivate, String created_at, String author, String author_picture, Integer level, String desc, String uid, Double lng, Double lat) {
+    public Cringe(Boolean isPrivate, Long created_at, String author, String author_picture, Integer level, String desc, String uid, Double lng, Double lat) {
         this.isPrivate = isPrivate;
         this.created_at = created_at;
         this.author = author;
@@ -55,9 +55,18 @@ public class Cringe {
     }
 
     public String getAuthor() { return author; }
+    public void setAuthor(String author) { this.author = author; }
+
     public Integer getLevel() { return level; }
-    public String getDateCreation() { return created_at; }
+    public void setLevel(Integer level) { this.level = level; }
+
+    public Long getDateCreation() { return created_at; }
+    public void setDateCreation(Long created_at) { this.created_at = created_at; }
+
     public String getDesc() { return desc; }
+    public void setDesc(String desc) { this.desc = desc; }
+
     public String getAuthor_picture() { return author_picture; }
+    public void setAuthor_picture(String author_picture) { this.author_picture = author_picture; }
 
 }

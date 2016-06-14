@@ -90,6 +90,8 @@ public class IntroActivity extends AppCompatActivity {
                     @Override
                     public void onError(FacebookException exception) {
                         Toast.makeText(IntroActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                        AccessToken.setCurrentAccessToken(null);
+                        LoginManager.getInstance().logInWithReadPermissions(IntroActivity.this, Arrays.asList("email","public_profile", "user_friends"));
                     }
                 });
 

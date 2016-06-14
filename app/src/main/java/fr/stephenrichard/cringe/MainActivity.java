@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                launchCringeCreate();
+                viewPager.setCurrentItem(1);
             }
 
         });
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -73,9 +74,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CringeFragment(), "Cringe");
         adapter.addFragment(new ListFragment(), "List");
+        adapter.addFragment(new CringeFragment(), "Cringe");
         adapter.addFragment(new MapFragment(), "Map");
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if(position == 1) {
+                    fabButton.setVisibility(View.GONE);
+                } else {
+                    fabButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }

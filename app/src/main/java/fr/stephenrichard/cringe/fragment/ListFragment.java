@@ -1,6 +1,7 @@
 package fr.stephenrichard.cringe.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
@@ -24,6 +26,7 @@ import java.util.Locale;
 
 import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.R;
+import fr.stephenrichard.cringe.activity.DetailCringeActivity;
 import fr.stephenrichard.cringe.model.Cringe;
 import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
 
@@ -80,10 +83,10 @@ public class ListFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final CringeViewHolder viewHolder, final Cringe cringe, final int position) {
+                final DatabaseReference cringeRef = getRef(position);
 
                 viewHolder.setAuthorName(cringe.author);
-                String timeAgo = getTimeAgo(cringe.created_at);
-                viewHolder.setDateCreationView(timeAgo);
+                viewHolder.setDateCreationView(getTimeAgo(cringe.created_at));
                 viewHolder.setBodyView(cringe.desc);
 
                 Picasso
@@ -93,7 +96,6 @@ public class ListFragment extends Fragment {
                         .into(viewHolder.authorPicture);
 
                 // UNCOMMENT TO ACTIVATE ACCESS TO DETAIL VIEW
-                /*
                 final String cringeKey = cringeRef.getKey();
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,7 +106,7 @@ public class ListFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-                */
+
             }
         };
         mRecycler.setAdapter(mAdapter);

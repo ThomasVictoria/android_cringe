@@ -42,7 +42,7 @@ public class Cringe {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("isPrivate", isPrivate);
-        result.put("created_at", created_at);
+        result.put("createdAt", created_at);
         result.put("author", author);
         result.put("author_picture", author_picture);
         result.put("level", level);

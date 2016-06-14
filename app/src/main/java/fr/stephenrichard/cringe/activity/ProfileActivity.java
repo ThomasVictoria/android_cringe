@@ -1,11 +1,13 @@
 package fr.stephenrichard.cringe.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import fr.stephenrichard.cringe.CircleTransform;
+import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 import fr.stephenrichard.cringe.viewholder.CringeViewHolder;
@@ -38,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private TextView profileName;
     private ImageView profilePicture;
+    private ImageView arrowBack;
     private TextView cringesCount;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private RecyclerView mRecycler;
@@ -100,6 +104,14 @@ public class ProfileActivity extends AppCompatActivity {
 
                     }
                 });
+
+        arrowBack = (ImageView) findViewById(R.id.arrow_back);
+        arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+            }
+        });
     }
 
     private static final int SECOND_MILLIS = 1000;

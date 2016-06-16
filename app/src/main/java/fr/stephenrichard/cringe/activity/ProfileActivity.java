@@ -2,6 +2,7 @@ package fr.stephenrichard.cringe.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.MainActivity;
@@ -46,6 +52,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private RecyclerView mRecycler;
 
+    private View mView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mContext = ProfileActivity.this;
+
+        mView = findViewById(R.id.item_cringe);
 
         profileName = (TextView) findViewById(R.id.profile_name);
         profilePicture = (ImageView) findViewById(R.id.profile_picture);
@@ -77,15 +87,27 @@ public class ProfileActivity extends AppCompatActivity {
             
             @Override
             protected void populateViewHolder(final CringeViewHolder viewHolder, final Cringe cringe, final int position) {
+                final DatabaseReference cringeRef = getRef(position);
 
                 viewHolder.setAuthorName(cringe.author);
-                viewHolder.setDateCreationView(getTimeAgo(cringe.created_at));
+                viewHolder.setDateCreationView(getTimeAgo(cringe.createdAt));
                 viewHolder.setBodyView(cringe.desc);
                 Picasso
                         .with(mContext)
                         .load(cringe.author_picture)
                         .transform(new CircleTransform())
                         .into(viewHolder.authorPicture);
+
+                final String cringeKey = cringeRef.getKey();
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Launch PostDetailActivity
+                        Intent intent = new Intent(mContext, DetailCringeActivity.class);
+                        intent.putExtra(DetailCringeActivity.EXTRA_POST_KEY, cringeKey);
+                        startActivity(intent);
+                    }
+                });
             }
         };
 

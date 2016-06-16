@@ -49,6 +49,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
@@ -99,7 +100,6 @@ public class CringeFragment extends android.support.v4.app.Fragment {
 
         EditText mEditText = (EditText) rootView.findViewById(R.id.cringe_desc);
         mEditText.clearFocus();
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -163,6 +163,9 @@ public class CringeFragment extends android.support.v4.app.Fragment {
                 }
             });
 
+        getActivity().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         return rootView;
     }
 
@@ -186,7 +189,7 @@ public class CringeFragment extends android.support.v4.app.Fragment {
             );
             // Toast.makeText(CringeFragment.this, message, Toast.LENGTH_LONG).show();
 
-            return new Double[]{mLocation.getLatitude(), mLocation.getLongitude()};
+            return new Double[]{mLocation.getLongitude(), mLocation.getLatitude()};
 
         }
         return new Double[0];
@@ -230,6 +233,7 @@ public class CringeFragment extends android.support.v4.app.Fragment {
 
         final String desc = mBodyTextField.getText().toString();
         final Long timestamp = System.currentTimeMillis();
+        // final Date mDate = new Date();
 
         final String userId = user.getUid();
         final String userName = user.getDisplayName();
@@ -238,11 +242,11 @@ public class CringeFragment extends android.support.v4.app.Fragment {
         writeNewCringe(isPrivate, timestamp, userName, userPicture, level, desc, userId, userLocation[0], userLocation[1]);
     }
 
-    private void writeNewCringe(Boolean isPrivate, Long created_at, String author, String authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
+    private void writeNewCringe(Boolean isPrivate, Long createdAt, String author, String authorPicture, Integer level, String desc, String uid, Double longitude, Double latitude) {
 
         String key = mDatabase.child("cringes").push().getKey();
 
-        Cringe cringe = new Cringe(isPrivate, created_at, author, authorPicture, level, desc, uid, longitude, latitude);
+        Cringe cringe = new Cringe(isPrivate, createdAt, author, authorPicture, level, desc, uid, longitude, latitude);
         Map<String, Object> cringeValues = cringe.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

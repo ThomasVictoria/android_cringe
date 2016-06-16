@@ -14,10 +14,10 @@
     <string name="slide_1_desc">Votre ami arrive… et il est malaisant</string>
 
     <string name="slide_2_title">Enregistrez le cringe maintenant !</string>
-    <string name="slide_2_desc">Sortez cringeometer et appuyez simplement sur le bouton +</string>
+    <string name="slide_2_desc">Sortez cringeometer et immortalisez l\'instant</string>
 
-    <string name="slide_3_title">Revivez vos moments cringe</string>
-    <string name="slide_3_desc">Bon on est d\'accord, ou pas. Mais au moins n\'y allez plus</string>
+    <string name="slide_3_title">Les autres aussi ont des moments cringes</string>
+    <string name="slide_3_desc">Découvrez ceux du monde entier</string>
 
     <string name="login_title">Welcome to the CringeOMeter</string>
     <string name="login_desc">On a tous nos moments génants</string>

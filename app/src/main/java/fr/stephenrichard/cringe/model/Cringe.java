@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
 public class Cringe {
     public Boolean isPrivate;
     public String author;
-    public Long created_at;
+    public Long createdAt;
     public Integer level;
     public String desc;
     public String uid;
@@ -28,7 +30,7 @@ public class Cringe {
 
     public Cringe(Boolean isPrivate, Long created_at, String author, String author_picture, Integer level, String desc, String uid, Double lng, Double lat) {
         this.isPrivate = isPrivate;
-        this.created_at = created_at;
+        this.createdAt = created_at;
         this.author = author;
         this.author_picture = author_picture;
         this.level = level;
@@ -42,7 +44,7 @@ public class Cringe {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("isPrivate", isPrivate);
-        result.put("createdAt", created_at);
+        result.put("createdAt", createdAt);
         result.put("author", author);
         result.put("author_picture", author_picture);
         result.put("level", level);
@@ -60,8 +62,8 @@ public class Cringe {
     public Integer getLevel() { return level; }
     public void setLevel(Integer level) { this.level = level; }
 
-    public Long getDateCreation() { return created_at; }
-    public void setDateCreation(Long created_at) { this.created_at = created_at; }
+    public Long getDateCreation() { return createdAt; }
+    public void setDateCreation(Long created_at) { this.createdAt= created_at; }
 
     public String getDesc() { return desc; }
     public void setDesc(String desc) { this.desc = desc; }

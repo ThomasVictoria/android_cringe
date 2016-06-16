@@ -2,6 +2,7 @@ package fr.stephenrichard.cringe.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,16 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import fr.stephenrichard.cringe.CircleTransform;
@@ -86,9 +91,8 @@ public class ListFragment extends Fragment {
                 final DatabaseReference cringeRef = getRef(position);
 
                 viewHolder.setAuthorName(cringe.author);
-                viewHolder.setDateCreationView(getTimeAgo(cringe.created_at));
+                viewHolder.setDateCreationView(getTimeAgo(cringe.createdAt));
                 viewHolder.setBodyView(cringe.desc);
-
                 Picasso
                         .with(getContext())
                         .load(cringe.author_picture)
@@ -121,30 +125,24 @@ public class ListFragment extends Fragment {
         }
     }
 
-    private String getDate(long time) {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(time);
-        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
-        return date;
-    }
-
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    public static String getTimeAgo(long time) {
-        if (time < 1000000000000L) {
+    public String getTimeAgo(Long timeInMilliseconds) {
+
+        if (timeInMilliseconds < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
-            time *= 1000;
+            timeInMilliseconds *= 1000;
         }
 
         long now = System.currentTimeMillis();
-        if (time > now || time <= 0) {
+        if (timeInMilliseconds > now || timeInMilliseconds <= 0) {
             return null;
         }
 
-        final long diff = now - time;
+        final long diff = now - timeInMilliseconds;
         if (diff < MINUTE_MILLIS) {
             return "à l'instant";
         } else if (diff < 2 * MINUTE_MILLIS) {

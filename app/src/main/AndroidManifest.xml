@@ -55,10 +55,13 @@
         <!-- CRINGE THEME -->
         <activity
             android:name=".fragment.CringeFragment"
-            android:theme="@style/CringeTheme" />
+            android:theme="@style/CringeTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity android:name=".fragment.ListFragment" />
-        <activity android:name=".activity.DetailCringeActivity" />
+        <activity
+            android:name=".activity.DetailCringeActivity"
+            android:theme="@style/ProfilTheme" />
 
         <activity
             android:name=".activity.ProfileActivity"

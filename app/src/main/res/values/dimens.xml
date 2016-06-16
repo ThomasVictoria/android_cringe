@@ -6,7 +6,7 @@
     <dimen name="dots_margin_bottom">15dp</dimen>
     <dimen name="margin_left_right">20dp</dimen>
     <dimen name="margin_top_bottom">10dp</dimen>
-    <dimen name="img_width">wrap_content</dimen>
+    <dimen name="img_width">300dp</dimen>
     <dimen name="img_height">300dp</dimen>
     <dimen name="img_intro_margin">60dp</dimen>
     <dimen name="font_small">11sp</dimen>
@@ -15,6 +15,7 @@
     <dimen name="slide_desc">15sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="radio_margin">5dp</dimen>
 
     <dimen name="activity_title_font_size">20sp</dimen>
 

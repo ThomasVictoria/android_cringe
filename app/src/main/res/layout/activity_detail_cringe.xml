@@ -41,7 +41,10 @@
         android:id="@+id/item_cringe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/cringe_padding"
+        android:paddingTop="@dimen/cringe_padding"
+        android:paddingLeft="@dimen/cringe_padding"
+        android:paddingRight="@dimen/cringe_padding"
+        android:paddingBottom="5dp"
         android:layout_below="@+id/menu_bar">
 
         <include
@@ -51,6 +54,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="@dimen/cringe_padding"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/cringe_level_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/cringe_level_checked_1"/>
+            <TextView
+                android:id="@+id/cringe_level_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/blue_author"
+                android:text="Test"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/cringe_desc"

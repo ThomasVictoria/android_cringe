@@ -2,18 +2,14 @@ package fr.stephenrichard.cringe.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.Profile;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,10 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.MainActivity;
@@ -108,6 +100,9 @@ public class ProfileActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
+                int id = mContext.getResources().getIdentifier(imageLevel(cringe.level), "drawable", mContext.getPackageName());
+                viewHolder.cringeIcon.setImageResource(id);
             }
         };
 
@@ -134,6 +129,32 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
             }
         });
+    }
+
+    public String imageLevel(Integer level){
+
+        String url = "";
+
+        switch (level) {
+            case 1:
+                url = "cringe_level_checked_1";
+                break;
+            case 2:
+                url = "cringe_level_checked_2";
+                break;
+            case 3:
+                url = "cringe_level_checked_3";
+                break;
+            case 4:
+                url = "cringe_level_checked_4";
+                break;
+            case 5:
+                url = "cringe_level_checked_5";
+                break;
+            default:
+        }
+
+        return url;
     }
 
     private static final int SECOND_MILLIS = 1000;

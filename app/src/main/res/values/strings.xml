@@ -23,6 +23,12 @@
     <string name="login_desc">On a tous nos moments génants</string>
     <string name="login_button">Se connecter à Facebook</string>
 
+    <string name="cringe_level_1">C\'est un petit peu génant</string>
+    <string name="cringe_level_2">Je commence à rougir</string>
+    <string name="cringe_level_3">Je me sens opressé</string>
+    <string name="cringe_level_4">Je me met en position latérale de sécurité</string>
+    <string name="cringe_level_5">A+, je pars dans le Larzac</string>
+
     <string name="yolo">yolo</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_cringe">Ajouter un cringe</string>

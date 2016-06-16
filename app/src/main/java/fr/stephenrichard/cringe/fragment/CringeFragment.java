@@ -1,60 +1,34 @@
 package fr.stephenrichard.cringe.fragment;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-import com.google.android.gms.location.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
-import fr.stephenrichard.cringe.MainActivity;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.model.Cringe;
 
@@ -92,7 +66,7 @@ public class CringeFragment extends android.support.v4.app.Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //
 
-        mButton_cringe = (Button) rootView.findViewById(R.id.Button_create_cringe);
+        mButton_cringe = (Button) rootView.findViewById(R.id.button_create_cringe);
         mSwitchPrivate = (Switch) rootView.findViewById(R.id.isPrivate);
         mBodyTextField = (EditText) rootView.findViewById(R.id.cringe_desc);
 
@@ -260,6 +234,10 @@ public class CringeFragment extends android.support.v4.app.Fragment {
                 "Votre cringe a bien été publié",
                 Toast.LENGTH_SHORT).show();
 
+        ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        viewPager.setCurrentItem(1);
+        mBodyTextField.setText("");
+        mRadioGroup.clearCheck();
     }
 
 }

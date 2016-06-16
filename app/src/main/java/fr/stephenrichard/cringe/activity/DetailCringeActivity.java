@@ -2,13 +2,12 @@ package fr.stephenrichard.cringe.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +30,9 @@ public class DetailCringeActivity extends AppCompatActivity {
     private TextView authorName;
     private TextView cringeDate;
     private TextView cringeDesc;
+    private TextView cringeLevelText;
     private ImageView arrowBack;
+    private ImageView cringeIcon;
     private Context mContext;
 
     @Override
@@ -49,6 +50,8 @@ public class DetailCringeActivity extends AppCompatActivity {
         mapPicture = (ImageView) findViewById(R.id.map);
         cringeDate = (TextView) findViewById(R.id.cringe_creation_date);
         cringeDesc = (TextView) findViewById(R.id.cringe_desc);
+        cringeIcon = (ImageView) findViewById(R.id.cringe_level_icon);
+        cringeLevelText = (TextView) findViewById(R.id.cringe_level_text);
 
         mDataBase.child("cringes").child(cringeKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,6 +71,9 @@ public class DetailCringeActivity extends AppCompatActivity {
                         .load("https://maps.googleapis.com/maps/api/staticmap?center="+cringe.lat+","+cringe.lng+"&zoom=16&size=640x640&maptype=roadmap&markers=color:red%7C"+cringe.lat+","+cringe.lng+"&key=AIzaSyCD81N4t9R-BppOD4jsiNoSyJk1YBxlfBM")
                         .into(mapPicture);
 
+                int id = mContext.getResources().getIdentifier(imageLevel(cringe.level), "drawable", mContext.getPackageName());
+                cringeIcon.setImageResource(id);
+                cringeLevelText.setText(textLevel(cringe.level));
             }
 
             @Override
@@ -84,6 +90,57 @@ public class DetailCringeActivity extends AppCompatActivity {
                 startActivity(new Intent(DetailCringeActivity.this, MainActivity.class));
             }
         });
+    }
+
+    public String imageLevel(Integer level){
+
+        String url = "";
+
+        switch (level) {
+            case 1:
+                url = "cringe_level_checked_1";
+                break;
+            case 2:
+                url = "cringe_level_checked_2";
+                break;
+            case 3:
+                url = "cringe_level_checked_3";
+                break;
+            case 4:
+                url = "cringe_level_checked_4";
+                break;
+            case 5:
+                url = "cringe_level_checked_5";
+                break;
+            default:
+        }
+
+        return url;
+    }
+    public String textLevel(Integer level){
+
+        String text = "";
+
+        switch (level) {
+            case 1:
+                text = "C'est un peu génant";
+                break;
+            case 2:
+                text = "Je commence à rougir";
+                break;
+            case 3:
+                text = "Je me sens opressé";
+                break;
+            case 4:
+                text = "Je met met en position latérale de sécurité";
+                break;
+            case 5:
+                text = "A+, je pars dans le Larzac";
+                break;
+            default:
+        }
+
+        return text;
     }
 
     private static final int SECOND_MILLIS = 1000;

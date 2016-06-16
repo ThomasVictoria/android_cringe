@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +12,11 @@ import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import fr.stephenrichard.cringe.fragment.CringeFragment;
-
-import fr.stephenrichard.cringe.fragment.ListFragment;
-import fr.stephenrichard.cringe.fragment.MapFragment;
 import fr.stephenrichard.cringe.activity.ProfileActivity;
 import fr.stephenrichard.cringe.adapter.ActivityAdapter;
+import fr.stephenrichard.cringe.fragment.CringeFragment;
+import fr.stephenrichard.cringe.fragment.ListFragment;
+import fr.stephenrichard.cringe.fragment.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
             }
 
         });
@@ -53,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 launchProfile();
             }
         });
-
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -64,25 +60,20 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    protected void launchCringeCreate() {
-        startActivity(new Intent(this, CringeFragment.class));
-    }
-
     protected void launchProfile() {
         startActivity(new Intent(this, ProfileActivity.class));
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ActivityAdapter adapter = new ActivityAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ListFragment(), "List");
         adapter.addFragment(new CringeFragment(), "Cringe");
+        adapter.addFragment(new ListFragment(), "List");
         adapter.addFragment(new MapFragment(), "Map");
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(position == 1) {
+                if(position == 0) {
                     fabButton.setVisibility(View.GONE);
                 } else {
                     fabButton.setVisibility(View.VISIBLE);

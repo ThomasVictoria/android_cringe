@@ -22,11 +22,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -45,7 +43,6 @@ import java.util.Map;
 import fr.stephenrichard.cringe.CircleTransform;
 import fr.stephenrichard.cringe.R;
 import fr.stephenrichard.cringe.activity.DetailCringeActivity;
-import fr.stephenrichard.cringe.model.Cringe;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
@@ -104,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                                     if(!isPrivate) {
                                         Marker marker = map.addMarker(new MarkerOptions()
-                                                .position(new LatLng(lng, lat))
+                                                .position(new LatLng(lat, lng))
                                                 .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                                         );
                                         allMarkersMap.put(marker.getId(), child.getKey());

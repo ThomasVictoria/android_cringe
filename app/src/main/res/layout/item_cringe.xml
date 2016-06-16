@@ -20,6 +20,13 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="@dimen/cringe_padding"/>
 
+        <ImageView
+            android:id="@+id/cringe_level_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cringe_level_checked_1"/>
+
         <TextView
             android:id="@+id/cringe_desc"
             android:layout_width="wrap_content"

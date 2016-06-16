@@ -1,11 +1,9 @@
 package fr.stephenrichard.cringe.model;
 
-import android.graphics.Bitmap;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

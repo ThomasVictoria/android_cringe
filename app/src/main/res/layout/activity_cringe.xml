@@ -43,57 +43,6 @@
                 android:layout_marginBottom="20dp"
                 android:text="Mettre son cringe en privée"/>
 
-            <RadioButton android:id="@+id/choice_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cringe_level_1"
-                android:buttonTint="@color/turquoise"
-                android:layout_marginBottom="10dp"
-                android:button="@null"
-                android:drawablePadding="10dp"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/radio1"
-                android:checked="false" />
-
-            <RadioButton android:id="@+id/choice_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/radio_margin"
-                android:paddingRight="20dp"
-                android:buttonTint="@color/turquoise"
-                android:button="@null"
-                android:layout_gravity="center"
-                android:drawablePadding="10dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/radio2"
-                android:text="@string/cringe_level_2"/>
-
-            <RadioButton android:id="@+id/choice_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/radio_margin"
-                android:paddingRight="20dp"
-                android:drawablePadding="10dp"
-                android:layout_gravity="center"
-                android:buttonTint="@color/turquoise"
-                android:button="@null"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/radio3"
-                android:text="@string/cringe_level_3"/>
-
-            <RadioButton android:id="@+id/choice_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/radio_margin"
-                android:paddingRight="20dp"
-                android:buttonTint="@color/turquoise"
-                android:button="@null"
-                android:layout_gravity="center"
-                android:drawablePadding="10dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/radio4"
-                android:text="@string/cringe_level_4"/>
-
             <RadioButton android:id="@+id/choice_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,10 +51,56 @@
                 android:layout_marginBottom="10dp"
                 android:buttonTint="@color/turquoise"
                 android:drawablePadding="10dp"
-                android:layout_gravity="center"
                 android:button="@null"
                 android:drawableLeft="@drawable/radio5"
                 android:text="@string/cringe_level_5"/>
+
+            <RadioButton android:id="@+id/choice_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/radio_margin"
+                android:paddingRight="20dp"
+                android:buttonTint="@color/turquoise"
+                android:button="@null"
+                android:drawablePadding="10dp"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/radio4"
+                android:text="@string/cringe_level_4"/>
+
+            <RadioButton android:id="@+id/choice_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/radio_margin"
+                android:paddingRight="20dp"
+                android:drawablePadding="10dp"
+                android:buttonTint="@color/turquoise"
+                android:button="@null"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/radio3"
+                android:text="@string/cringe_level_3"/>
+
+            <RadioButton android:id="@+id/choice_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/radio_margin"
+                android:paddingRight="20dp"
+                android:buttonTint="@color/turquoise"
+                android:button="@null"
+                android:drawablePadding="10dp"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/radio2"
+                android:text="@string/cringe_level_2"/>
+
+            <RadioButton android:id="@+id/choice_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cringe_level_1"
+                android:buttonTint="@color/turquoise"
+                android:layout_marginBottom="10dp"
+                android:button="@null"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/radio1"
+                android:checked="false" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/cringe_desc_layout"
